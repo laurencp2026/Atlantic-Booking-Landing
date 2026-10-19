@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#073b4c">
+  <meta name="description" content="Project notes, limitations and alpha testing for Atlantic Rebook.">
+  <title>Behind the build — Atlantic Rebook</title>
+
+  <style>
+    :root {
+      --ocean: #073b4c;
+      --sea: #087e8b;
+      --foam: #eaf6f5;
+      --sand: #fff7e8;
+      --ink: #18343d;
+      --muted: #5c727b;
+      --line: #d9e6e8;
+      --white: #fff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #f5f8f8;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    a:focus-visible {
+      outline: 3px solid #d89d35;
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(100% - 36px, 780px);
+      margin-inline: auto;
+    }
+
+    header {
+      background: var(--ocean);
+      color: white;
+      padding: 27px 0;
+    }
+
+    .brand {
+      color: white;
+      font-size: 20px;
+      font-weight: 850;
+      text-decoration: none;
+      letter-spacing: -.5px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 12px;
+      color: #d9efef;
+      font-size: 14px;
+      font-weight: 700;
+      text-underline-offset: 4px;
+    }
+
+    main { padding-top: 36px; padding-bottom: 55px; }
+
+    .intro { margin-bottom: 30px; }
+
+    .eyebrow {
+      color: var(--sea);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 8px 0 12px;
+      color: var(--ocean);
+      font-size: clamp(34px, 7vw, 48px);
+      letter-spacing: -1.8px;
+      line-height: 1.15;
+    }
+
+    .intro p { color: var(--muted); font-size: 17px; }
+
+    .note-card {
+      padding: 23px;
+      margin-bottom: 16px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      color: var(--ocean);
+      font-size: 23px;
+      letter-spacing: -.5px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin-bottom: 7px;
+      color: var(--ocean);
+      font-size: 17px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    li { margin-bottom: 8px; padding-left: 3px; }
+
+    ul { padding-left: 22px; }
+
+    .notice {
+      padding: 14px 16px;
+      background: var(--sand);
+      border: 1px solid #eedfbd;
+      border-radius: 10px;
+      color: #655126;
+      font-size: 14px;
+    }
+
+    .placeholder {
+      padding: 15px;
+      margin: 10px 0 16px;
+      border: 1px dashed #9db7bd;
+      border-radius: 10px;
+      background: #f7fbfb;
+      color: var(--muted);
+    }
+
+    .placeholder strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--ocean);
+    }
+
+    .site-footer {
+      padding: 23px 0;
+      background: var(--ocean);
+      color: #d9e9ed;
+      font-size: 13px;
+    }
+
+    .site-footer a {
+      color: white;
+      font-weight: 700;
+      text-underline-offset: 3px;
+    }
+
+    @media (min-width: 600px) {
+      main { padding-top: 48px; }
+      .note-card { padding: 29px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a class="brand" href="index.html">🌊 Atlantic Rebook</a>
+      <br>
+      <a class="back-link" href="index.html">← Back to the landing page</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="intro">
+      <span class="eyebrow">Project notes</span>
+      <h1>Behind the build</h1>
+      <p>
+        Atlantic Rebook is a student project exploring how surf schools
+        could manage cancelled lessons and arrange replacement bookings.
+        These notes explain the idea, its current limitations and the
+        testing work behind the prototype.
+      </p>
+    </div>
+
+    <section class="note-card">
+      <h2>Project purpose</h2>
+      <p>
+        Surf lessons can be cancelled because of weather or sea conditions.
+        A cancellation may leave a school needing to contact several
+        customers, find enough places in other sessions and keep track
+        of bookings that are still unresolved.
+      </p>
+      <p>
+        Atlantic Rebook explores a simple workflow built around three
+        actions: cancel a session, rebook the affected groups and track
+        outstanding bookings and their associated value.
+      </p>
+      <p>
+        The intended audience is surf schools, with Atlantic Edge Surf
+        School in Lahinch, County Clare, providing the project context.
+        The concept and proposed price are not evidence of market demand.
+      </p>
+    </section>
+
+    <section class="note-card">
+      <h2>Current limitations</h2>
+      <ul>
+        <li>
+          The landing page is a static website and does not provide a
+          working customer registration service.
+        </li>
+        <li>
+          The interest form only displays a local thank-you message.
+          It does not collect or transmit submissions.
+        </li>
+        <li>
+          The separate demo is a prototype and is not a shared,
+          multi-user booking management system.
+        </li>
+        <li>
+          The proposed price of €19 per month has not been validated.
+          It is an initial pricing idea, not a live offer.
+        </li>
+        <li>
+          Sample bookings, names and contact details in the prototype
+          are fictional. They must not be treated as real customer records.
+        </li>
+        <li>
+          No claim is made that the project has been tested by real
+          surf schools or that it produces a measured business outcome.
+        </li>
+      </ul>
+    </section>
+
+    <section class="note-card">
+      <h2>AI assistance</h2>
+      <p>
+        AI assistance was used to help draft the HTML, CSS and JavaScript,
+        structure the landing page, develop responsive styling and
+        document the prototype's limitations.
+      </p>
+      <p>
+        The generated code should be reviewed and tested by the project
+        author before publication. The author is responsible for checking
+        that the published website works as intended and accurately
+        represents the project.
+      </p>
+      <p>
+        No external JavaScript libraries are required by these two pages.
+        The interest form does not store or transmit visitor information.
+      </p>
+    </section>
+
+    <section class="note-card" id="alpha-test">
+      <h2>Alpha test</h2>
+      <p>
+        Use this section to document a real issue discovered during
+        testing and the change made in response. Complete these notes
+        after carrying out the test yourself.
+      </p>
+
+      <div class="placeholder">
+        <strong>Issue found during testing</strong>
+        [Replace this placeholder with the actual issue you observed,
+        including the steps needed to reproduce it.]
+      </div>
+
+      <div class="placeholder">
+        <strong>What I changed</strong>
+        [Describe the code or design change you made to address the issue.]
+      </div>
+
+      <div class="placeholder">
+        <strong>Retest result</strong>
+        [Record what happened when you repeated the test and whether
+        the issue was resolved.]
+      </div>
+
+      <p class="notice">
+        These are intentionally blank placeholders. Do not describe a
+        test, issue or fix as completed until you have actually carried
+        it out.
+      </p>
+    </section>
+
+    <section class="note-card">
+      <h2>Next steps</h2>
+      <ul>
+        <li>Test the layout on a phone and a desktop browser.</li>
+        <li>Check the navigation, demo link and form confirmation.</li>
+        <li>Review keyboard navigation, visible focus and text readability.</li>
+        <li>Complete the alpha test notes using your own findings.</li>
+        <li>Ask potential users for feedback before making claims about demand or pricing.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Atlantic Rebook · Student project ·
+        <a href="index.html">Return to the landing page</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
