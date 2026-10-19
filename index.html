@@ -4,323 +4,521 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#073b4c">
-  <meta name="description" content="Atlantic Rebook helps surf schools manage cancelled lessons, rebook customers and track bookings at risk.">
-  <title>Atlantic Rebook — Keep bookings moving</title>
+  <meta name="theme-color" content="#102f32">
+  <meta name="description" content="Atlantic Rebook is a surf-school project exploring a simpler way to manage weather cancellations and rebook customers.">
+  <title>Atlantic Rebook — Keep the session alive</title>
 
   <style>
     :root {
-      --ocean: #073b4c;
-      --sea: #087e8b;
-      --foam: #eaf6f5;
-      --sand: #fff7e8;
-      --ink: #18343d;
-      --muted: #5c727b;
-      --white: #ffffff;
-      --line: #d9e6e8;
+      --deep: #102f32;
+      --deep-2: #1a4142;
+      --sea: #b9d8cf;
+      --foam: #e9eee5;
+      --sand: #f1e7d3;
+      --paper: #faf7ef;
+      --orange: #f0784b;
+      --ink: #183536;
+      --muted: #637573;
+      --line: #d4dcd3;
+      --white: #fffdf7;
     }
 
     * { box-sizing: border-box; }
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 24px;
+      scroll-padding-top: 20px;
     }
 
     body {
       margin: 0;
-      background: var(--white);
       color: var(--ink);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-      font-size: 16px;
-      line-height: 1.65;
+      background: var(--paper);
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      line-height: 1.6;
     }
 
-    a, button, input { font: inherit; }
+    a { color: inherit; }
+    button, input { font: inherit; }
 
-    a:focus-visible,
-    button:focus-visible,
-    input:focus-visible {
-      outline: 3px solid #d89d35;
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 3px solid var(--orange);
       outline-offset: 4px;
     }
 
-    .container {
-      width: min(100% - 40px, 1080px);
-      margin-inline: auto;
+    .wrap {
+      width: min(1160px, calc(100% - 40px));
+      margin: auto;
     }
 
-    .site-header {
-      background: var(--white);
+    .topline {
+      height: 6px;
+      background: var(--orange);
+    }
+
+    header {
+      background: var(--paper);
       border-bottom: 1px solid var(--line);
     }
 
-    .header-inner {
-      min-height: 76px;
+    .nav {
+      min-height: 82px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--ocean);
-      font-size: 20px;
-      font-weight: 850;
-      letter-spacing: -.6px;
+      gap: 12px;
       text-decoration: none;
+      color: var(--deep);
     }
 
-    .brand-icon {
+    .logo-symbol {
+      width: 42px;
+      height: 42px;
       display: grid;
       place-items: center;
-      width: 40px;
-      height: 40px;
-      background: var(--foam);
-      border-radius: 12px;
-      font-size: 23px;
+      background: var(--deep);
+      color: var(--sea);
+      border-radius: 50% 50% 8px 50%;
+      font-size: 22px;
+      transform: rotate(-7deg);
     }
 
-    .header-link {
-      color: var(--ocean);
-      font-size: 14px;
-      font-weight: 750;
-      text-decoration: none;
+    .logo-name {
+      display: block;
+      font-weight: 900;
+      font-size: 19px;
+      letter-spacing: -1px;
+      line-height: 1.15;
     }
 
+    .logo-caption {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .nav-link {
+      color: var(--deep);
+      font-size: 13px;
+      font-weight: 900;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 5px;
+    }
+
+    /* Hero: an editorial surf-report layout, not a standard SaaS banner. */
     .hero {
       position: relative;
       overflow: hidden;
-      background: var(--ocean);
-      color: var(--white);
-      padding: 76px 0 82px;
+      background: var(--deep);
+      color: var(--paper);
+      padding: 66px 0 58px;
     }
 
-    .hero::after {
+    .hero::before {
       content: "";
       position: absolute;
-      width: 290px;
-      height: 290px;
-      border: 1px solid #ffffff20;
+      width: 520px;
+      height: 520px;
+      right: -150px;
+      top: -245px;
+      border: 1px solid #b9d8cf28;
       border-radius: 50%;
-      right: -130px;
-      bottom: -180px;
-      box-shadow: 0 0 0 35px #ffffff08, 0 0 0 70px #ffffff06;
+      box-shadow:
+        0 0 0 35px #b9d8cf08,
+        0 0 0 75px #b9d8cf07,
+        0 0 0 120px #b9d8cf05;
       pointer-events: none;
     }
 
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 35px;
+      position: relative;
+      z-index: 1;
+    }
+
     .eyebrow {
-      display: inline-block;
-      margin-bottom: 18px;
-      padding: 5px 11px;
-      border: 1px solid #ffffff55;
-      border-radius: 999px;
-      color: #d9f0ee;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1.2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 23px;
+      color: var(--sea);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 2px;
       text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 23px;
+      height: 2px;
+      background: var(--orange);
     }
 
     h1, h2, h3, p { margin-top: 0; }
 
     h1 {
-      max-width: 790px;
-      margin-bottom: 22px;
-      font-size: clamp(39px, 8vw, 68px);
-      font-weight: 850;
-      letter-spacing: -2.8px;
-      line-height: 1.08;
+      max-width: 760px;
+      margin-bottom: 24px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(47px, 10vw, 94px);
+      font-weight: 500;
+      letter-spacing: -4px;
+      line-height: .99;
+    }
+
+    h1 em {
+      color: var(--sea);
+      font-weight: 400;
     }
 
     .hero-copy {
-      max-width: 630px;
-      margin-bottom: 30px;
-      color: #d9e9ed;
-      font-size: clamp(17px, 3vw, 20px);
+      max-width: 490px;
+      color: #d2dfd7;
+      font-size: 17px;
     }
 
-    .hero-actions {
+    .actions {
       display: flex;
       flex-direction: column;
       align-items: stretch;
       gap: 12px;
-      max-width: 360px;
+      margin-top: 28px;
+      max-width: 350px;
     }
 
-    .button {
+    .btn {
       display: inline-flex;
       min-height: 54px;
       align-items: center;
       justify-content: center;
-      gap: 9px;
-      padding: 13px 20px;
-      border: 2px solid transparent;
-      border-radius: 12px;
-      font-weight: 800;
+      gap: 12px;
+      padding: 14px 20px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 900;
       text-align: center;
       text-decoration: none;
       cursor: pointer;
-      transition: background .15s ease, transform .15s ease;
+      transition: background .18s, color .18s;
     }
 
-    .button:active { transform: scale(.98); }
-
-    .button-light {
-      background: var(--white);
-      color: var(--ocean);
+    .btn-primary {
+      background: var(--orange);
+      color: #241f1a;
     }
 
-    .button-light:hover { background: var(--foam); }
+    .btn-primary:hover { background: #ff956e; }
 
-    .button-outline {
-      border-color: #ffffff80;
-      color: var(--white);
+    .btn-outline {
+      border-color: #b9d8cf70;
+      color: var(--paper);
       background: transparent;
     }
 
-    .button-outline:hover { background: #ffffff12; }
+    .btn-outline:hover { background: #ffffff12; }
 
-    .hero-note {
-      margin: 18px 0 0;
-      color: #c2dbdf;
-      font-size: 13px;
+    .hero-caption {
+      margin-top: 18px;
+      color: #a9c4bb;
+      font-size: 11px;
+      letter-spacing: .5px;
     }
 
-    section { padding: 68px 0; }
-
-    .section-heading {
-      max-width: 660px;
-      margin-bottom: 32px;
+    .surf-art {
+      min-height: 275px;
+      position: relative;
+      overflow: hidden;
+      background: #d7e2d8;
+      border-radius: 48% 48% 5px 5px;
+      border: 1px solid #ffffff30;
     }
 
-    .section-kicker {
-      color: var(--sea);
-      font-size: 12px;
-      font-weight: 850;
-      letter-spacing: 1.3px;
+    .sun {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      top: 35px;
+      right: 22%;
+      border-radius: 50%;
+      background: #e7b87a;
+    }
+
+    .cliff {
+      position: absolute;
+      width: 120%;
+      height: 64%;
+      bottom: 15%;
+      left: -10%;
+      background: #6f8980;
+      clip-path: polygon(0 67%, 17% 25%, 26% 42%, 41% 12%, 57% 54%, 72% 31%, 100% 65%, 100% 100%, 0 100%);
+    }
+
+    .water {
+      position: absolute;
+      inset: 53% 0 0;
+      background: #7baea5;
+    }
+
+    .wave {
+      position: absolute;
+      left: -10%;
+      width: 120%;
+      height: 70px;
+      border-top: 4px solid #f8f4e9;
+      border-radius: 50%;
+      transform: rotate(-5deg);
+    }
+
+    .wave.one { top: 55%; }
+    .wave.two { top: 70%; left: 15%; transform: rotate(5deg); }
+    .wave.three { top: 86%; left: -25%; transform: rotate(-3deg); }
+
+    .art-label {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      padding: 8px 10px;
+      background: var(--paper);
+      color: var(--deep);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .hero-foot {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid #ffffff35;
+      color: #bdd0c7;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* A narrow orange divider makes the page feel like a printed field guide. */
+    .ticker {
+      overflow: hidden;
+      background: var(--orange);
+      color: #29251e;
+      padding: 12px 0;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .ticker-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    section { padding: 76px 0; }
+
+    .section-top {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-bottom: 34px;
+    }
+
+    .kicker {
+      color: #517a70;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 2px;
       text-transform: uppercase;
     }
 
     h2 {
-      margin-bottom: 14px;
-      color: var(--ocean);
-      font-size: clamp(29px, 5vw, 42px);
-      letter-spacing: -1.3px;
-      line-height: 1.2;
+      margin: 8px 0 14px;
+      color: var(--deep);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(36px, 7vw, 57px);
+      font-weight: 500;
+      letter-spacing: -2px;
+      line-height: 1.05;
     }
 
-    .section-intro {
+    .intro {
+      max-width: 470px;
       color: var(--muted);
-      font-size: 17px;
-      margin-bottom: 0;
+      font-size: 16px;
     }
-
-    .how-section { background: #f6f9f9; }
 
     .steps {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 16px;
+      gap: 0;
+      border-top: 1px solid #b8c8be;
     }
 
     .step {
-      padding: 25px;
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 18px;
+      padding: 24px 8px 26px 0;
+      border-bottom: 1px solid #b8c8be;
     }
 
-    .step-number {
-      display: grid;
-      place-items: center;
-      width: 46px;
-      height: 46px;
-      margin-bottom: 18px;
-      border-radius: 14px;
-      background: var(--foam);
-      color: var(--ocean);
-      font-weight: 900;
-      font-size: 19px;
+    .step-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .step-no {
+      color: #68877d;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 29px;
+    }
+
+    .step-mark {
+      color: var(--orange);
+      font-size: 23px;
     }
 
     .step h3 {
       margin-bottom: 8px;
-      color: var(--ocean);
-      font-size: 21px;
+      color: var(--deep);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 27px;
+      font-weight: 500;
     }
 
     .step p {
+      max-width: 300px;
       margin-bottom: 0;
       color: var(--muted);
+      font-size: 14px;
     }
 
     .price-section {
-      padding-top: 55px;
-      padding-bottom: 55px;
+      background: var(--sand);
+      border-top: 1px solid #e0d5c1;
+      border-bottom: 1px solid #e0d5c1;
     }
 
-    .price-card {
+    .price-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .price-stamp {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      justify-content: center;
+      min-height: 230px;
       padding: 27px;
-      border: 1px solid #d4e8e5;
-      border-radius: 20px;
-      background: var(--foam);
+      border: 1px solid #bdb39e;
+      background: #f8f0df;
+      transform: rotate(-1deg);
     }
 
-    .price-label {
-      display: inline-block;
-      margin-bottom: 9px;
-      color: var(--sea);
-      font-size: 12px;
-      font-weight: 850;
-      letter-spacing: 1px;
+    .stamp-top {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 2px;
       text-transform: uppercase;
     }
 
     .price {
-      margin-bottom: 8px;
-      color: var(--ocean);
-      font-size: 43px;
-      font-weight: 900;
-      letter-spacing: -1.5px;
-      line-height: 1.2;
+      margin: 15px 0 4px;
+      color: var(--deep);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 64px;
+      letter-spacing: -3px;
+      line-height: 1;
     }
 
     .price small {
-      font-size: 16px;
-      font-weight: 600;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      font-size: 15px;
       letter-spacing: 0;
     }
 
-    .price-card p {
-      margin-bottom: 0;
+    .stamp-bottom {
+      margin-top: 17px;
+      padding-top: 13px;
+      border-top: 1px solid #cfc3ad;
+      color: #68766b;
+      font-size: 11px;
+    }
+
+    .price-copy {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .price-copy p {
+      max-width: 470px;
       color: var(--muted);
     }
 
-    .contact-section { background: var(--sand); }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 28px;
+    .price-copy .btn {
+      margin-top: 8px;
+      background: var(--deep);
+      color: var(--white);
     }
 
-    .contact-copy { max-width: 440px; }
+    .price-copy .btn:hover { background: var(--deep-2); }
 
-    .contact-copy p { color: var(--muted); }
+    .contact-section { background: var(--paper); }
 
-    .form-card {
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    .contact-copy h2 { max-width: 440px; }
+
+    .contact-copy p {
+      max-width: 400px;
+      color: var(--muted);
+    }
+
+    .form-panel {
       padding: 24px;
       background: var(--white);
-      border: 1px solid #efe3cc;
-      border-radius: 18px;
+      border: 1px solid var(--line);
+      box-shadow: 7px 7px 0 var(--sand);
+    }
+
+    .form-title {
+      margin-bottom: 23px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--line);
+      color: var(--deep);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
     }
 
     .field { margin-bottom: 18px; }
@@ -328,120 +526,136 @@
     .field label {
       display: block;
       margin-bottom: 7px;
-      color: var(--ocean);
-      font-size: 14px;
-      font-weight: 800;
+      color: var(--deep);
+      font-size: 13px;
+      font-weight: 900;
     }
 
     .field input {
-      display: block;
       width: 100%;
-      min-height: 52px;
-      padding: 12px 14px;
-      border: 1px solid #c8d7db;
-      border-radius: 10px;
-      background: var(--white);
+      min-height: 51px;
+      padding: 12px;
+      border: 1px solid #c8d3ca;
+      border-radius: 3px;
+      background: #fdfcf7;
       color: var(--ink);
     }
 
-    .field input::placeholder { color: #82949a; }
+    .field input::placeholder { color: #899690; }
 
-    .form-disclaimer {
-      margin: 14px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .form-submit {
+    .submit {
       width: 100%;
       border: 0;
-      background: var(--sea);
-      color: var(--white);
+      background: var(--orange);
+      color: #241f1a;
     }
 
-    .form-submit:hover { background: var(--ocean); }
+    .submit:hover { background: #ff956e; }
 
-    .success-message {
-      margin-top: 18px;
+    .privacy {
+      margin: 13px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .success {
+      margin-top: 16px;
       padding: 15px;
-      border: 1px solid #a7d7bf;
-      border-radius: 12px;
-      background: #edf9f1;
-      color: #175b39;
+      border-left: 4px solid #4f8971;
+      background: var(--foam);
+      color: var(--deep);
     }
 
-    .success-message h3 {
-      margin-bottom: 5px;
-      font-size: 17px;
-    }
-
-    .success-message p { margin-bottom: 0; }
-
+    .success h3 { margin-bottom: 5px; }
+    .success p { margin-bottom: 0; font-size: 13px; }
     [hidden] { display: none !important; }
 
-    .site-footer {
+    footer {
       padding: 28px 0;
-      background: var(--ocean);
-      color: #d9e9ed;
+      background: var(--deep);
+      color: #d0ded6;
     }
 
     .footer-inner {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 10px;
+      gap: 14px;
     }
 
     .footer-inner p {
       margin: 0;
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .footer-links {
       display: flex;
+      gap: 20px;
       flex-wrap: wrap;
-      gap: 18px;
     }
 
     .footer-links a {
-      color: var(--white);
-      font-size: 14px;
-      font-weight: 750;
+      color: var(--sea);
+      font-size: 12px;
+      font-weight: 900;
       text-underline-offset: 4px;
     }
 
-    @media (min-width: 650px) {
-      .hero { padding: 105px 0 112px; }
+    @media (min-width: 720px) {
+      .hero { padding: 80px 0 40px; }
 
-      .hero-actions {
+      .hero-grid {
+        grid-template-columns: 1.1fr .9fr;
+        align-items: center;
+        gap: 50px;
+      }
+
+      .surf-art { min-height: 430px; }
+
+      .actions {
         flex-direction: row;
         align-items: center;
         max-width: none;
       }
 
+      .hero-foot { margin-top: 45px; }
+
+      .section-top {
+        grid-template-columns: 1fr .8fr;
+        align-items: end;
+      }
+
       .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
-      .price-card {
-        flex-direction: row;
-        justify-content: space-between;
+      .step {
+        padding: 26px 24px 28px 0;
+        border-bottom: 0;
+        border-right: 1px solid #b8c8be;
+      }
+
+      .step + .step { padding-left: 24px; }
+      .step:last-child { border-right: 0; }
+
+      .price-layout {
+        grid-template-columns: .8fr 1.2fr;
         align-items: center;
-        padding: 34px;
+        gap: 65px;
       }
 
-      .price-description { max-width: 500px; }
+      .price-stamp { padding: 34px; }
 
-      .contact-grid {
-        grid-template-columns: .9fr 1.1fr;
+      .contact-layout {
+        grid-template-columns: 1fr 1fr;
         align-items: start;
-        gap: 50px;
+        gap: 70px;
       }
 
-      .form-card { padding: 30px; }
+      .form-panel { padding: 32px; }
 
       .footer-inner {
         flex-direction: row;
-        align-items: center;
         justify-content: space-between;
+        align-items: center;
       }
     }
 
@@ -455,88 +669,135 @@
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#home" aria-label="Atlantic Rebook home">
-        <span class="brand-icon" aria-hidden="true">🌊</span>
-        <span>Atlantic Rebook</span>
+  <div class="topline"></div>
+
+  <header>
+    <div class="wrap nav">
+      <a class="logo" href="#home" aria-label="Atlantic Rebook home">
+        <span class="logo-symbol" aria-hidden="true">≋</span>
+        <span>
+          <span class="logo-name">ATLANTIC REBOOK</span>
+          <span class="logo-caption">Built for the changing tide</span>
+        </span>
       </a>
-      <a class="header-link" href="#interest">Register interest ↗</a>
+
+      <a class="nav-link" href="#interest">GET IN TOUCH ↗</a>
     </div>
   </header>
 
   <main>
     <section class="hero" id="home">
-      <div class="container">
-        <span class="eyebrow">Made for surf schools</span>
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">A surf-school project · Lahinch, Ireland</div>
 
-        <h1>Weather cancels lessons. Not your bookings.</h1>
+            <h1>Weather cancels lessons. <em>Not your bookings.</em></h1>
 
-        <p class="hero-copy">
-          When the surf or weather forces a cancellation, keeping track of
-          everyone who needs a new lesson can get complicated.
-          Atlantic Rebook is a simple concept for helping surf schools
-          organise cancelled bookings, find new session spaces and keep
-          track of revenue at risk.
-        </p>
+            <p class="hero-copy">
+              The Atlantic doesn't always play ball. When a lesson gets
+              cancelled, there's still a group of people waiting to surf.
+              Atlantic Rebook explores a simpler way to organise those
+              bookings, find new session spaces and see what's still outstanding.
+            </p>
 
-        <div class="hero-actions">
-          <a
-            class="button button-light"
-            href="https://laurencp2026.github.io/Atlantic-Rebook/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Try the demo <span aria-hidden="true">→</span>
-          </a>
+            <div class="actions">
+              <a
+                class="btn btn-primary"
+                href="https://laurencp2026.github.io/Atlantic-Rebook/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                TRY THE DEMO <span aria-hidden="true">↗</span>
+              </a>
 
-          <a class="button button-outline" href="#how-it-works">
-            How it works
-          </a>
+              <a class="btn btn-outline" href="#how-it-works">
+                THE THREE STEPS ↓
+              </a>
+            </div>
+
+            <p class="hero-caption">
+              An early-stage student project. A practical problem. A simple idea.
+            </p>
+          </div>
+
+          <div class="surf-art" role="img"
+            aria-label="Abstract illustration of the Atlantic coastline, a setting sun and rolling waves">
+            <div class="sun"></div>
+            <div class="cliff"></div>
+            <div class="water"></div>
+            <div class="wave one"></div>
+            <div class="wave two"></div>
+            <div class="wave three"></div>
+            <div class="art-label">53° 34′ N · County Clare</div>
+          </div>
         </div>
 
-        <p class="hero-note">
-          A student project for surf schools · Atlantic Edge Surf School, Lahinch
-        </p>
+        <div class="hero-foot">
+          <span>Atlantic Edge Surf School</span>
+          <span>Lahinch · County Clare</span>
+          <span>Keep the session alive ↗</span>
+        </div>
       </div>
     </section>
 
-    <section class="how-section" id="how-it-works">
-      <div class="container">
-        <div class="section-heading">
-          <span class="section-kicker">A simpler workflow</span>
-          <h2>Three steps. One clearer picture.</h2>
-          <p class="section-intro">
-            A proposed way to manage the work that starts after a lesson
-            gets cancelled.
+    <div class="ticker" aria-label="Project focus">
+      <div class="wrap ticker-inner">
+        <span>LESSONS CHANGE</span>
+        <span>BOOKINGS SHOULDN'T GET LOST</span>
+        <span>MADE FOR SURF SCHOOLS</span>
+      </div>
+    </div>
+
+    <section id="how-it-works">
+      <div class="wrap">
+        <div class="section-top">
+          <div>
+            <div class="kicker">01 / The idea</div>
+            <h2>Less chasing.<br>More getting back in the water.</h2>
+          </div>
+
+          <p class="intro">
+            A cancellation creates a second job: working out who needs a
+            new slot, where the space is and which bookings still need attention.
+            Atlantic Rebook is a prototype exploring that workflow.
           </p>
         </div>
 
         <div class="steps">
           <article class="step">
-            <div class="step-number" aria-hidden="true">01</div>
+            <div class="step-head">
+              <span class="step-no">01</span>
+              <span class="step-mark" aria-hidden="true">↘</span>
+            </div>
             <h3>Cancel</h3>
             <p>
-              Mark a cancelled session and identify the bookings that need
-              a new lesson.
+              Mark the affected session and bring its bookings into one
+              place for follow-up.
             </p>
           </article>
 
           <article class="step">
-            <div class="step-number" aria-hidden="true">02</div>
+            <div class="step-head">
+              <span class="step-no">02</span>
+              <span class="step-mark" aria-hidden="true">↗</span>
+            </div>
             <h3>Rebook</h3>
             <p>
-              Review suitable upcoming sessions and check that there is
-              enough space for each group.
+              Check upcoming sessions and match each group to a slot with
+              enough free places.
             </p>
           </article>
 
           <article class="step">
-            <div class="step-number" aria-hidden="true">03</div>
+            <div class="step-head">
+              <span class="step-no">03</span>
+              <span class="step-mark" aria-hidden="true">◎</span>
+            </div>
             <h3>Track</h3>
             <p>
-              See which bookings are still waiting and estimate the value
-              associated with those people.
+              See which groups are still waiting and estimate the value
+              associated with those bookings.
             </p>
           </article>
         </div>
@@ -544,103 +805,78 @@
     </section>
 
     <section class="price-section" id="pricing">
-      <div class="container">
-        <div class="price-card">
-          <div class="price-description">
-            <span class="price-label">Proposed price</span>
-            <div class="price">€19 <small>/ month</small></div>
-            <p>
-              An initial pricing idea for Atlantic Rebook.
-              The price has not been validated with customers and is
-              not an active subscription offer.
-            </p>
-          </div>
+      <div class="wrap price-layout">
+        <div class="price-stamp">
+          <span class="stamp-top">Initial pricing idea / 001</span>
+          <div class="price">€19<small> / month</small></div>
+          <span class="stamp-bottom">PROPOSED PRICE · NOT A LIVE OFFER</span>
+        </div>
 
-          <a
-            class="button"
-            style="background: var(--ocean); color: white;"
-            href="#interest"
-          >
-            Register interest →
-          </a>
+        <div class="price-copy">
+          <div class="kicker">02 / The price</div>
+          <h2>Simple by design.</h2>
+          <p>
+            €19 per month is the proposed starting price for this concept.
+            It has not yet been tested with customers, and no paid plan
+            is available through this website.
+          </p>
+          <a class="btn" href="#interest">I'M INTERESTED ↗</a>
         </div>
       </div>
     </section>
 
     <section class="contact-section" id="interest">
-      <div class="container contact-grid">
+      <div class="wrap contact-layout">
         <div class="contact-copy">
-          <span class="section-kicker">Get involved</span>
-          <h2>Help shape Atlantic Rebook.</h2>
-
+          <div class="kicker">03 / Your turn</div>
+          <h2>Know the problem? Help shape the solution.</h2>
           <p>
-            Interested in the idea? Use the form to see the confirmation
-            experience. This demonstration does not collect your details
-            or send your submission anywhere.
+            Atlantic Rebook is an early-stage student project. This page
+            lets you try the concept and see what the interest form could
+            look like.
           </p>
-
           <p>
-            The form is for demonstrating the landing page, not for
-            submitting a real expression of interest.
+            The form is a demonstration only. It will not register your
+            interest or send your details anywhere.
           </p>
         </div>
 
-        <form class="form-card" id="interest-form">
+        <form class="form-panel" id="interest-form">
+          <div class="form-title">Interest form / Demo only</div>
+
           <div class="field">
             <label for="name">Your name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              placeholder="e.g. Alex"
-              autocomplete="off"
-              required
-            >
+            <input id="name" name="name" type="text"
+              placeholder="e.g. Alex" autocomplete="off" required>
           </div>
 
           <div class="field">
             <label for="email">Email address</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              autocomplete="off"
-              required
-            >
+            <input id="email" name="email" type="email"
+              placeholder="you@example.com" autocomplete="off" required>
           </div>
 
           <div class="field">
             <label for="school">Surf school (optional)</label>
-            <input
-              id="school"
-              name="school"
-              type="text"
-              placeholder="Your surf school"
-              autocomplete="off"
-            >
+            <input id="school" name="school" type="text"
+              placeholder="Your surf school" autocomplete="off">
           </div>
 
-          <button class="button form-submit" type="submit">
-            Register interest
+          <button class="btn submit" type="submit">
+            REGISTER INTEREST <span aria-hidden="true">↗</span>
           </button>
 
-          <p class="form-disclaimer">
-            Demo only. No information is sent, stored or transmitted.
-            Do not enter real personal information.
+          <p class="privacy">
+            DEMONSTRATION ONLY. Nothing is transmitted or saved.
+            Please don't enter real personal information.
           </p>
 
-          <div
-            class="success-message"
-            id="success-message"
-            role="status"
-            aria-live="polite"
-            tabindex="-1"
-            hidden
-          >
-            <h3>Thanks for your interest!</h3>
+          <div class="success" id="success-message"
+            role="status" aria-live="polite" tabindex="-1" hidden>
+            <h3>Thanks for stopping by.</h3>
             <p>
-              This is a demonstration. Nothing has been submitted or saved.
+              This is a demonstration. Your details have not been
+              submitted or saved.
             </p>
           </div>
         </form>
@@ -648,13 +884,13 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© <span id="year"></span> Atlantic Rebook · Student project</p>
+  <footer>
+    <div class="wrap footer-inner">
+      <p>© <span id="year"></span> ATLANTIC REBOOK · A STUDENT PROJECT</p>
 
       <div class="footer-links">
-        <a href="notes.html">Behind the build</a>
-        <a href="#home">Back to top ↑</a>
+        <a href="notes.html">BEHIND THE BUILD ↗</a>
+        <a href="#home">BACK TO TOP ↑</a>
       </div>
     </div>
   </footer>
@@ -666,16 +902,16 @@
       new Date().getFullYear();
 
     const form = document.getElementById("interest-form");
-    const successMessage = document.getElementById("success-message");
+    const success = document.getElementById("success-message");
 
     form.addEventListener("submit", function (event) {
       event.preventDefault();
 
-      // This demonstration deliberately does not read, store,
-      // or transmit any form values.
+      // Do not read, save, or transmit form values.
+      // This interaction is intentionally local to the current page.
       form.reset();
-      successMessage.hidden = false;
-      successMessage.focus();
+      success.hidden = false;
+      success.focus();
     });
   </script>
 </body>
