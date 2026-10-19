@@ -1,765 +1,136 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Behind the build: research, assumptions, product planning and alpha testing for Atlantic Rebook.">
-  <title>Behind the Build | Atlantic Rebook</title>
-
-  <style>
-    :root {
-      --ocean: #102f32;
-      --ocean-light: #1c4547;
-      --mint: #b9d8cf;
-      --sand: #f1e7d3;
-      --paper: #faf7ef;
-      --orange: #f0784b;
-      --ink: #203435;
-      --muted: #647573;
-      --line: #d9dfd5;
-      --white: #ffffff;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.7;
-    }
-
-    a {
-      color: var(--ocean-light);
-      text-decoration-thickness: 1px;
-      text-underline-offset: 4px;
-    }
-
-    a:hover {
-      color: #b94d29;
-    }
-
-    .topbar {
-      background: var(--ocean);
-      color: var(--paper);
-      padding: 17px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .brand {
-      color: var(--paper);
-      text-decoration: none;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-    }
-
-    .topbar a:last-child {
-      color: var(--mint);
-      font-size: 0.9rem;
-    }
-
-    .hero {
-      background: var(--ocean);
-      color: var(--paper);
-      padding: 72px 6% 76px;
-      border-bottom: 6px solid var(--mint);
-    }
-
-    .hero-inner,
-    main,
-    footer {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .eyebrow {
-      color: var(--orange);
-      font-size: 0.75rem;
-      font-weight: 800;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin: 0 0 14px;
-    }
-
-    h1,
-    h2,
-    h3 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-weight: 500;
-      line-height: 1.2;
-    }
-
-    h1 {
-      font-size: clamp(2.8rem, 8vw, 5rem);
-      letter-spacing: -0.055em;
-      max-width: 720px;
-      margin: 0 0 22px;
-    }
-
-    .hero p {
-      max-width: 650px;
-      color: #d7e4dc;
-      font-size: 1.08rem;
-      margin: 0;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 30px;
-    }
-
-    .hero-meta span {
-      border: 1px solid #55706c;
-      border-radius: 30px;
-      padding: 5px 12px;
-      color: var(--mint);
-      font-size: 0.78rem;
-    }
-
-    main {
-      padding: 30px 24px 70px;
-    }
-
-    .contents {
-      background: var(--sand);
-      border-radius: 8px;
-      padding: 22px 25px;
-      margin: 0 0 28px;
-    }
-
-    .contents h2 {
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin: 0 0 10px;
-    }
-
-    .contents ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 22px;
-      padding-left: 18px;
-      margin: 0;
-    }
-
-    .contents li {
-      font-size: 0.9rem;
-    }
-
-    .section {
-      padding: 42px 0;
-      border-bottom: 1px solid var(--line);
-      scroll-margin-top: 20px;
-    }
-
-    .section h2 {
-      font-size: clamp(1.9rem, 5vw, 2.7rem);
-      letter-spacing: -0.035em;
-      margin: 0 0 16px;
-    }
-
-    .section h3 {
-      font-size: 1.3rem;
-      margin: 0 0 9px;
-    }
-
-    .section-intro {
-      max-width: 700px;
-      color: var(--muted);
-      margin: 0 0 26px;
-    }
-
-    .fact-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 22px;
-    }
-
-    .fact {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 20px;
-    }
-
-    .fact-label {
-      color: var(--muted);
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin: 0 0 7px;
-    }
-
-    .fact p:last-child {
-      margin-bottom: 0;
-    }
-
-    .quote {
-      background: #edf2eb;
-      border-left: 4px solid var(--orange);
-      padding: 18px 20px;
-      margin: 14px 0;
-      border-radius: 0 7px 7px 0;
-    }
-
-    .quote blockquote {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.15rem;
-      line-height: 1.5;
-    }
-
-    .quote p {
-      color: var(--muted);
-      font-size: 0.78rem;
-      margin: 10px 0 0;
-    }
-
-    .research-card,
-    .test-entry {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 22px;
-      margin: 15px 0;
-    }
-
-    .research-card h3,
-    .test-entry h3 {
-      margin-bottom: 8px;
-    }
-
-    .tag {
-      display: inline-block;
-      background: var(--mint);
-      color: var(--ocean);
-      border-radius: 20px;
-      padding: 3px 10px;
-      font-size: 0.72rem;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .note {
-      background: var(--sand);
-      border-radius: 7px;
-      padding: 16px 19px;
-      font-size: 0.91rem;
-      margin-top: 20px;
-    }
-
-    .prd-list {
-      list-style: none;
-      padding: 0;
-      margin: 22px 0 0;
-      counter-reset: prd;
-    }
-
-    .prd-list li {
-      counter-increment: prd;
-      position: relative;
-      padding: 0 0 22px 48px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .prd-list li::before {
-      content: counter(prd, decimal-leading-zero);
-      position: absolute;
-      left: 0;
-      top: 0;
-      background: var(--ocean);
-      color: var(--mint);
-      padding: 5px 8px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      font-weight: 800;
-    }
-
-    .prd-list strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .alpha-result {
-      border-left: 4px solid var(--mint);
-      padding-left: 18px;
-    }
-
-    footer {
-      padding: 28px 24px 45px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    footer a {
-      font-weight: 700;
-    }
-
-    @media (max-width: 600px) {
-      .topbar {
-        padding: 15px 5%;
-      }
-
-      .hero {
-        padding: 54px 6% 58px;
-      }
-
-      main {
-        padding: 20px 18px 50px;
-      }
-
-      .fact-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .contents ul {
-        display: block;
-      }
-
-      .contents li {
-        margin: 5px 0;
-      }
-
-      .research-card,
-      .test-entry {
-        padding: 18px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102f32">
+<meta name="description" content="Behind the build: research, product decisions, prototype limitations and alpha testing for Atlantic Rebook.">
+<title>Behind the Build — Atlantic Rebook</title>
+<style>
+:root{--deep:#102f32;--deep2:#1a4142;--sea:#b9d8cf;--sand:#f1e7d3;--paper:#faf7ef;--orange:#f0784b;--ink:#183536;--muted:#687a73;--line:#d4dcd3;--white:#fffdf7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 "Trebuchet MS",Arial,sans-serif}
+a{color:var(--deep);text-underline-offset:3px}
+.topline{height:5px;background:var(--orange)}
+.wrap{width:min(920px,calc(100% - 36px));margin:auto}
+header{border-bottom:1px solid var(--line)}
+.header-inner{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:900;letter-spacing:-.5px;color:var(--deep);text-decoration:none}
+.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+.tag{font-size:10px;font-weight:900;letter-spacing:1px;background:var(--sand);padding:7px 9px;border:1px solid #d9c9aa}
+.hero{padding:54px 0 42px;background:var(--deep);color:var(--white)}
+.eyebrow{color:var(--sea);font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase}
+h1,h2,h3{line-height:1.2;color:var(--deep)}
+.hero h1{font-family:Georgia,serif;font-size:clamp(38px,7vw,64px);font-weight:400;letter-spacing:-1.7px;color:var(--white);max-width:760px;margin:12px 0}
+.hero p{max-width:650px;color:#d9e6df;margin:0}
+main{padding:34px 0 70px}
+section{padding:27px 0;border-bottom:1px solid var(--line)}
+section:last-child{border-bottom:0}
+.kicker{color:var(--muted);font-size:10px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}
+h2{font-family:Georgia,serif;font-size:30px;font-weight:400;letter-spacing:-.5px;margin:7px 0 16px}
+h3{font-size:16px;margin:0 0 7px}
+p{margin:9px 0}
+ul{padding-left:22px}
+li{padding:3px 0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{background:var(--white);border:1px solid var(--line);padding:18px}
+.note{background:#e9eee5;border-left:4px solid var(--deep);padding:16px 18px;margin:14px 0}
+.warning{background:#fff1e9;border-left:4px solid var(--orange);padding:16px 18px;margin:14px 0}
+.small{font-size:13px;color:var(--muted)}
+footer{background:var(--deep);color:var(--sea);padding:22px 0;font-size:11px;font-weight:800;letter-spacing:.8px}
+footer .wrap{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.hero{padding:38px 0 32px}.header-inner{min-height:70px}}
+</style>
 </head>
-
 <body>
-  <header class="topbar">
-    <a class="brand" href="index.html">ATLANTIC REBOOK</a>
-    <a href="index.html">Back to landing page ↗</a>
-  </header>
-
-  <section class="hero">
-    <div class="hero-inner">
-      <p class="eyebrow">Project notebook · Lahinch, Ireland</p>
-      <h1>Behind the build.</h1>
-      <p>
-        The thinking behind Atlantic Rebook: the problem I want to solve,
-        the assumptions I need to test, the product plan and what I learned
-        from testing the prototype.
-      </p>
-      <div class="hero-meta">
-        <span>Student project</span>
-        <span>Surf-school operations</span>
-        <span>October 2026</span>
+<div class="topline"></div>
+<header><div class="wrap header-inner">
+  <a class="brand" href="index.html">ATLANTIC REBOOK<small>Behind the build</small></a>
+  <span class="tag">STUDENT PROJECT</span>
+</div></header>
+<div class="hero"><div class="wrap">
+  <div class="eyebrow">Field notes · Lahinch, Ireland</div>
+  <h1>What sits behind the prototype.</h1>
+  <p>Research, assumptions and testing notes for Atlantic Rebook — a concept for helping a small surf school organise weather-cancelled lessons and the bookings that need attention afterwards.</p>
+</div></div>
+<main class="wrap">
+  <section>
+    <div class="kicker">01 / The problem</div>
+    <h2>When the sea says no.</h2>
+    <p>Surf lessons can be cancelled when weather or sea conditions are unsuitable. For a small surf school, each cancellation can create follow-up work: finding affected bookings, identifying alternative sessions, contacting customers and keeping track of revenue still at risk.</p>
+    <p>Atlantic Rebook explores whether a focused operations view can make the cancellation and rebooking workload easier to organise.</p>
+  </section>
+  <section>
+    <div class="kicker">02 / Competitor research</div>
+    <h2>Existing booking tools</h2>
+    <p class="small"><strong>Checked on: 19 October 2026.</strong> Review based on publicly available product information on the dates shown below.</p>
+    <div class="grid">
+      <div class="card">
+        <h3><a href="https://bookwhen.com/features" target="_blank" rel="noopener noreferrer">Bookwhen</a></h3>
+        <p>Provides class and event booking tools, schedules and booking management. It is a useful reference for how customers find and book sessions.</p>
+        <p class="small"><strong>Information checked:</strong> 19 October 2026 · <a href="https://bookwhen.com/features" target="_blank" rel="noopener noreferrer">Bookwhen features page</a></p>
+      </div>
+      <div class="card">
+        <h3><a href="https://fareharbor.com/solutions/experience-booking-software/" target="_blank" rel="noopener noreferrer">FareHarbor</a></h3>
+        <p>Provides booking and reservation management for tours and activities. It is relevant to activity businesses that manage availability and customer reservations.</p>
+        <p class="small"><strong>Information checked:</strong> 19 October 2026 · <a href="https://fareharbor.com/solutions/experience-booking-software/" target="_blank" rel="noopener noreferrer">FareHarbor booking software page</a></p>
       </div>
     </div>
+    <p class="small">This is a preliminary review of publicly available product information, not a full feature-by-feature audit. It does not assume that these tools cannot support weather-related workflows. Product features may change after the review date.</p>
   </section>
-
-  <main>
-    <nav class="contents" aria-label="Page contents">
-      <h2>On this page</h2>
-      <ul>
-        <li><a href="#task-one">Task 1: Think it through</a></li>
-        <li><a href="#alternatives">Existing alternatives</a></li>
-        <li><a href="#business-model">Business model</a></li>
-        <li><a href="#prd">Lean PRD</a></li>
-        <li><a href="#purpose">Project purpose</a></li>
-        <li><a href="#limitations">Limitations</a></li>
-        <li><a href="#ai">AI assistance</a></li>
-        <li><a href="#alpha-test">Alpha test</a></li>
-      </ul>
-    </nav>
-
-    <!-- TASK 1 -->
-    <section class="section" id="task-one">
-      <p class="eyebrow">01 / Problem discovery</p>
-      <h2>Task 1: Think It Through Before You Build</h2>
-      <p class="section-intro">
-        Before building the product, I identified a possible customer,
-        a specific problem and a simple solution to test. These are initial
-        hypotheses rather than proven market findings.
-      </p>
-
-      <div class="fact">
-        <p class="fact-label">My hunch before AI</p>
-        <p>
-          “I think small surf-school owners would pay for a simple booking
-          management tool because weather cancellations create extra admin
-          work and can cause them to lose revenue when customers do not rebook.”
-        </p>
-      </div>
-
-      <h3 style="margin-top: 30px;">My chosen niche</h3>
-      <p>
-        Small surf schools in Ireland that frequently cancel lessons because
-        of weather and sea conditions, and need a simpler way to rebook
-        customers into alternative sessions.
-      </p>
-
-      <div class="fact-grid">
-        <div class="fact">
-          <p class="fact-label">Who might buy it?</p>
-          <p>
-            The owner or manager of a small surf school. They may pay for a
-            tool that reduces administration and helps recover bookings
-            affected by cancellations.
-          </p>
-        </div>
-
-        <div class="fact">
-          <p class="fact-label">Who uses it daily?</p>
-          <p>
-            The owner, manager or booking administrator who handles cancelled
-            sessions, contacts customers and arranges alternative lesson times.
-          </p>
-        </div>
-
-        <div class="fact">
-          <p class="fact-label">What technology?</p>
-          <p>
-            A mobile-friendly web application for recording cancellations,
-            rebooking customers into sessions with available capacity, and
-            tracking the value of bookings still awaiting rebooking.
-          </p>
-        </div>
-
-        <div class="fact">
-          <p class="fact-label">The problem to investigate</p>
-          <p>
-            When conditions are unsuitable for surfing, a school may need to
-            reorganise multiple bookings quickly. I want to find out whether
-            a dedicated rebooking workflow would make this process easier.
-          </p>
-        </div>
-      </div>
-
-      <h3 style="margin-top: 32px;">What might customers say?</h3>
-      <p>
-        The following quotes are fictional examples created to illustrate
-        the possible problem. They are not real interview quotes or evidence
-        from actual surf-school customers.
-      </p>
-
-      <div class="quote">
-        <blockquote>
-          “When the surf is too rough, I spend ages contacting everyone and
-          trying to fit cancelled bookings into other sessions.”
-        </blockquote>
-        <p>Invented example · Not a real customer interview</p>
-      </div>
-
-      <div class="quote">
-        <blockquote>
-          “I need to know who still needs a new lesson and how much money is
-          tied up in those bookings.”
-        </blockquote>
-        <p>Invented example · Not a real customer interview</p>
-      </div>
-
-      <h3 style="margin-top: 32px;">How might schools handle this today?</h3>
-      <p>
-        Possible existing methods include paper diaries, phone calls and
-        WhatsApp messages. These are assumptions to investigate, not verified
-        facts about Atlantic Edge Surf School or every surf school in Ireland.
-        Research and conversations with potential users would help establish
-        what tools they actually use and where the biggest difficulties occur.
-      </p>
-    </section>
-
-    <!-- COMPETITOR RESEARCH -->
-    <section class="section" id="alternatives">
-      <p class="eyebrow">02 / Market research</p>
-      <h2>Existing alternatives</h2>
-      <p class="section-intro">
-        I reviewed two established booking products to understand which parts
-        of the booking-management job they already support.
-      </p>
-
-      <article class="research-card">
-        <span class="tag">Alternative 01</span>
-        <h3>Bookwhen</h3>
-        <p>
-          <strong>Official website:</strong>
-          <a href="https://bookwhen.com/" target="_blank" rel="noopener noreferrer">
-            bookwhen.com
-          </a>
-        </p>
-        <p>
-          <strong>What it supports:</strong> Class and event booking,
-          session scheduling, attendee management and capacity-related
-          booking workflows. These features overlap with parts of a surf
-          school’s booking-management job.
-        </p>
-        <p>
-          <strong>Relevance to Atlantic Rebook:</strong> It shows that
-          scheduling and managing bookings are already served by established
-          tools. Atlantic Rebook would need to demonstrate a clear benefit
-          for the specific process of handling weather cancellations and
-          tracking bookings that still need to be rearranged.
-        </p>
-        <p><strong>Date checked:</strong> 19 October 2026.</p>
-        <p>
-          <a href="https://bookwhen.com/features" target="_blank" rel="noopener noreferrer">
-            Review Bookwhen features ↗
-          </a>
-        </p>
-      </article>
-
-      <article class="research-card">
-        <span class="tag">Alternative 02</span>
-        <h3>FareHarbor</h3>
-        <p>
-          <strong>Official website:</strong>
-          <a href="https://fareharbor.com/" target="_blank" rel="noopener noreferrer">
-            fareharbor.com
-          </a>
-        </p>
-        <p>
-          <strong>What it supports:</strong> Booking software for tours and
-          activities, including reservations, availability and operational
-          booking management.
-        </p>
-        <p>
-          <strong>Relevance to Atlantic Rebook:</strong> It is another
-          established option in the activities-booking market. Further
-          research is needed to understand how well its existing workflows
-          meet the needs of small surf schools dealing with weather-related
-          cancellations.
-        </p>
-        <p><strong>Date checked:</strong> 19 October 2026.</p>
-        <p>
-          <a href="https://fareharbor.com/solutions/experience-booking-software/"
-             target="_blank" rel="noopener noreferrer">
-            Review FareHarbor's booking software ↗
-          </a>
-        </p>
-      </article>
-
-      <div class="note">
-        <strong>Research limitation:</strong> This is a preliminary review
-        of official product information, not a full competitor test. I have
-        not verified how these products are used by individual Irish surf
-        schools, nor established that they cannot handle weather
-        cancellations. The next step would be to test relevant workflows
-        and speak with potential users.
-      </div>
-    </section>
-
-    <!-- BUSINESS MODEL -->
-    <section class="section" id="business-model">
-      <p class="eyebrow">03 / Commercial assumption</p>
-      <h2>Business model</h2>
-      <p>
-        My initial pricing hypothesis is a subscription of <strong>€19 per
-        month per surf school</strong>.
-      </p>
-      <p>
-        The assumption is that an owner would consider this price if the
-        product saved enough administrative time or helped recover enough
-        bookings to justify the monthly cost.
-      </p>
-      <p>
-        This price has not been validated with paying customers. To test it,
-        I would show the prototype to surf-school owners, ask how they
-        currently handle cancellations, and find out whether the proposed
-        workflow solves a sufficiently important problem at this price.
-      </p>
-    </section>
-
-    <!-- LEAN PRD -->
-    <section class="section" id="prd">
-      <p class="eyebrow">04 / Product plan</p>
-      <h2>Lean PRD</h2>
-      <p class="section-intro">
-        The first version should focus on one clear problem rather than trying
-        to build a complete booking platform.
-      </p>
-
-      <ol class="prd-list">
-        <li>
-          <strong>Hypothesis</strong>
-          A dedicated rebooking workflow can help small surf schools manage
-          weather-related cancellations with less manual administration.
-        </li>
-        <li>
-          <strong>Target audience</strong>
-          Owners and managers of small surf schools in Ireland that are
-          affected by weather and sea-condition cancellations.
-        </li>
-        <li>
-          <strong>One main call to action</strong>
-          “Register interest in trying Atlantic Rebook.”
-        </li>
-        <li>
-          <strong>Success measure</strong>
-          Count registrations of interest and measure how long it takes to
-          organise rebookings during a test with potential users.
-        </li>
-        <li>
-          <strong>Out of scope</strong>
-          Online payments, automated customer messages, live weather
-          forecasts and integrations with external booking systems.
-        </li>
-      </ol>
-    </section>
-
-    <!-- PURPOSE -->
-    <section class="section" id="purpose">
-      <p class="eyebrow">05 / Why this project?</p>
-      <h2>Project purpose</h2>
-      <p>
-        Atlantic Rebook is a prototype exploring how small surf schools could
-        organise weather-cancelled lessons more easily. It focuses on three
-        related tasks: seeing today's sessions, moving affected bookings to
-        another session with available capacity, and understanding the value
-        of bookings still awaiting rebooking.
-      </p>
-      <p>
-        The aim is to test whether this focused workflow is useful before
-        investing in a fully functioning product. The project is designed
-        around the operational realities of surf lessons, where conditions
-        can change and staff may need to reorganise bookings at short notice.
-      </p>
-    </section>
-
-    <!-- LIMITATIONS -->
-    <section class="section" id="limitations">
-      <p class="eyebrow">06 / What it does not prove</p>
-      <h2>Limitations</h2>
-      <ul>
-        <li>
-          The demo uses fictional sample bookings and does not contain real
-          customer information.
-        </li>
-        <li>
-          It is a prototype rather than a complete production booking system.
-        </li>
-        <li>
-          Data changes are stored locally in the browser for demonstration;
-          there is no shared database for a real team.
-        </li>
-        <li>
-          It does not send real customer notifications or process payments.
-        </li>
-        <li>
-          It does not provide live weather forecasts or connect to external
-          booking platforms.
-        </li>
-        <li>
-          Customer demand, willingness to pay and the estimated value of time
-          saved have not yet been validated.
-        </li>
-        <li>
-          The competitor review is preliminary, and the possible current
-          practices described above remain assumptions until researched.
-        </li>
-      </ul>
-    </section>
-
-    <!-- AI -->
-    <section class="section" id="ai">
-      <p class="eyebrow">07 / Process notes</p>
-      <h2>AI assistance</h2>
-      <p>
-        I used AI assistance to help organise the product idea, structure the
-        project notes, explore the user problem and develop and refine HTML,
-        CSS and JavaScript for the prototype.
-      </p>
-      <p>
-        AI assistance was used as a support tool rather than proof that the
-        idea is commercially viable. I still need to check the links, test
-        the interface, verify behaviour in the browser and validate the
-        assumptions with potential users.
-      </p>
-      <p>
-        The example customer quotes on this page are invented for the
-        exercise. They must not be presented as real interviews or customer
-        feedback.
-      </p>
-    </section>
-
-    <!-- ALPHA TEST -->
-    <section class="section" id="alpha-test">
-      <p class="eyebrow">08 / Testing &amp; iteration</p>
-      <h2>Alpha test</h2>
-      <p class="section-intro">
-        I tested the landing page and demo to check that the main journey
-        worked and that the prototype behaved as expected.
-      </p>
-
-      <div class="test-entry">
-        <h3>What I tried</h3>
-        <p>
-          I opened the landing page on my phone and clicked the “Try the demo”
-          button to check whether it opened the Atlantic Rebook application.
-        </p>
-      </div>
-
-      <div class="test-entry">
-        <h3>One thing broken or confusing</h3>
-        <p>
-          The “Try the demo” button did not open the demo because the URL in
-          the HTML code was incorrect.
-        </p>
-      </div>
-
-      <div class="test-entry">
-        <h3>What I changed</h3>
-        <p>
-          I edited the landing page's <code>index.html</code> and corrected
-          the button's link to point to the published Atlantic Rebook demo.
-        </p>
-      </div>
-
-      <div class="test-entry alpha-result">
-        <h3>Result</h3>
-        <p>
-          After correcting the URL, I clicked the button again and confirmed
-          that it opened the published Atlantic Rebook demo successfully.
-        </p>
-      </div>
-
-      <div class="test-entry">
-        <h3>Additional feature checks</h3>
-        <p>
-          I tested the demo's cancellation, rebooking and money-at-risk views,
-          checked the fictional sample records, and refreshed the page to see
-          whether changes persisted.
-        </p>
-      </div>
-
-      <div class="note">
-        <strong>What I learned:</strong> A working interface is not enough
-        if users cannot reach it from the landing page. Testing the complete
-        journey helped me identify and fix a broken link. The additional
-        checks also helped me consider whether the main prototype workflows
-        were understandable and whether changes remained after refreshing.
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <span>Atlantic Rebook · Student project · Lahinch, Ireland</span>
-    <a href="index.html">Return to the landing page ↑</a>
-  </footer>
+  <section>
+    <div class="kicker">03 / Lean product requirements</div>
+    <h2>What the prototype is testing</h2>
+    <div class="grid">
+      <div class="card"><h3>Primary user</h3><p>Owner or manager of a small surf school who needs to manage cancelled lessons and affected bookings.</p></div>
+      <div class="card"><h3>Core hypothesis</h3><p>A dedicated cancellation queue, alternative-session view and money-at-risk estimate can reduce the effort needed to keep track of affected bookings.</p></div>
+      <div class="card"><h3>Primary action</h3><p>Review affected bookings and select a suitable alternative session to propose to the customer.</p></div>
+      <div class="card"><h3>Success signal</h3><p>Interest from surf-school operators and evidence that the workflow makes it faster or clearer to organise cancellations.</p></div>
+    </div>
+    <p><strong>Out of scope for this prototype:</strong> online payments, automatic customer messages, live forecast integrations, production booking-system integrations and a shared multi-user database.</p>
+  </section>
+  <section>
+    <div class="kicker">04 / Business model assumption</div>
+    <h2>A small monthly subscription?</h2>
+    <p>One initial pricing hypothesis is €19 per month per surf school. The idea is that a small operator may pay for a tool that reduces cancellation administration and helps keep affected bookings visible.</p>
+    <div class="note"><strong>Not validated yet.</strong> The price and willingness to pay are assumptions to test through conversations with surf-school owners. The prototype does not prove demand.</div>
+  </section>
+  <section>
+    <div class="kicker">05 / Prototype limitations</div>
+    <h2>What this version does — and does not do</h2>
+    <div class="warning">
+      <p><strong>Rebooking limitation:</strong> Atlantic Rebook helps the owner organise cancelled bookings and select alternative sessions. It does not automatically contact customers or confirm that a proposed time suits them. The owner must contact the customer separately to agree the new time.</p>
+    </div>
+    <ul>
+      <li>The records and weather values are fictional sample data.</li>
+      <li>Changes are stored in the current browser using local storage; there is no shared database.</li>
+      <li>The weather examples are illustrative only, not live forecasts or safety advice.</li>
+      <li>The prototype does not send email or SMS messages, take payments or connect to an existing booking system.</li>
+      <li>The displayed money-at-risk figure is an estimate based on sample bookings and an assumed lesson price, not actual revenue.</li>
+    </ul>
+  </section>
+  <section>
+    <div class="kicker">06 / Use of AI assistance</div>
+    <h2>How AI supported the work</h2>
+    <p>AI assistance was used to help draft and refine interface copy, explore the workflow, generate and revise HTML/CSS/JavaScript, and identify prototype limitations and testing ideas. The output was reviewed and adjusted as part of the project. Research assumptions, sample data and prototype behaviour should still be checked by the project author.</p>
+  </section>
+  <section>
+    <div class="kicker">07 / Alpha test</div>
+    <h2>Test notes</h2>
+    <div class="card">
+      <h3>What I tried</h3>
+      <p>I opened the landing page on my phone and clicked the “Try the demo” button to check whether it opened the Atlantic Rebook application.</p>
+      <h3>One thing broken or confusing</h3>
+      <p>The “Try the demo” button did not open the demo because the URL in the HTML code was incorrect.</p>
+      <h3>What I changed</h3>
+      <p>I edited the landing page’s index.html and corrected the button’s link to point to the published Atlantic Rebook demo.</p>
+      <h3>Result</h3>
+      <p>After correcting the URL, I clicked the button again and confirmed that it opened the published Atlantic Rebook demo successfully.</p>
+      <h3>Additional feature checks</h3>
+      <p>I tested the demo’s cancellation, rebooking and money-at-risk views, checked fictional sample records, and refreshed the page to see whether changes persisted.</p>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>ATLANTIC REBOOK · BEHIND THE BUILD</span><span>FICTIONAL SAMPLE DATA · STUDENT PROJECT</span></div></footer>
 </body>
 </html>
