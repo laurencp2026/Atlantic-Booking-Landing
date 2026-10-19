@@ -24,7 +24,11 @@ h1,h2,h3{line-height:1.2;color:var(--deep)}
 .hero h1{font-family:Georgia,serif;font-size:clamp(38px,7vw,64px);font-weight:400;letter-spacing:-1.7px;color:var(--white);max-width:760px;margin:12px 0}
 .hero p{max-width:650px;color:#d9e6df;margin:0}
 main{padding:34px 0 70px}
-section{padding:27px 0;border-bottom:1px solid var(--line)}
+.contents{background:var(--white);border:1px solid var(--line);padding:18px 20px;margin-bottom:20px}
+.contents h2{font-family:"Trebuchet MS",Arial,sans-serif;font-size:12px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;margin:0 0 10px}
+.contents ol{margin:0;padding-left:22px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 24px}
+.contents a{font-weight:700;text-decoration-thickness:1px}
+section{padding:27px 0;border-bottom:1px solid var(--line);scroll-margin-top:20px}
 section:last-child{border-bottom:0}
 .kicker{color:var(--muted);font-size:10px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase}
 h2{font-family:Georgia,serif;font-size:30px;font-weight:400;letter-spacing:-.5px;margin:7px 0 16px}
@@ -54,13 +58,26 @@ footer .wrap{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
   <p>Research, assumptions and testing notes for Atlantic Rebook — a concept for helping a small surf school organise weather-cancelled lessons and the bookings that need attention afterwards.</p>
 </div></div>
 <main class="wrap">
-  <section>
+  <nav class="contents" aria-label="Jump to a section">
+    <h2>On this page · jump to a section</h2>
+    <ol>
+      <li><a href="#problem">The problem</a></li>
+      <li><a href="#competitors">Competitor research</a></li>
+      <li><a href="#requirements">Lean product requirements</a></li>
+      <li><a href="#business-model">Business model assumption</a></li>
+      <li><a href="#limitations">Prototype limitations</a></li>
+      <li><a href="#hunch">My hunch before AI</a></li>
+      <li><a href="#ai">Use of AI assistance</a></li>
+      <li><a href="#alpha-test">Alpha test</a></li>
+    </ol>
+  </nav>
+  <section id="problem">
     <div class="kicker">01 / The problem</div>
     <h2>When the sea says no.</h2>
     <p>Surf lessons can be cancelled when weather or sea conditions are unsuitable. For a small surf school, each cancellation can create follow-up work: finding affected bookings, identifying alternative sessions, contacting customers and keeping track of revenue still at risk.</p>
     <p>Atlantic Rebook explores whether a focused operations view can make the cancellation and rebooking workload easier to organise.</p>
   </section>
-  <section>
+  <section id="competitors">
     <div class="kicker">02 / Competitor research</div>
     <h2>Existing booking tools</h2>
     <p class="small"><strong>Checked on: 19 October 2026.</strong> Review based on publicly available product information on the dates shown below.</p>
@@ -78,7 +95,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
     </div>
     <p class="small">This is a preliminary review of publicly available product information, not a full feature-by-feature audit. It does not assume that these tools cannot support weather-related workflows. Product features may change after the review date.</p>
   </section>
-  <section>
+  <section id="requirements">
     <div class="kicker">03 / Lean product requirements</div>
     <h2>What the prototype is testing</h2>
     <div class="grid">
@@ -89,13 +106,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
     </div>
     <p><strong>Out of scope for this prototype:</strong> online payments, automatic customer messages, live forecast integrations, production booking-system integrations and a shared multi-user database.</p>
   </section>
-  <section>
+  <section id="business-model">
     <div class="kicker">04 / Business model assumption</div>
     <h2>A small monthly subscription?</h2>
     <p>One initial pricing hypothesis is €19 per month per surf school. The idea is that a small operator may pay for a tool that reduces cancellation administration and helps keep affected bookings visible.</p>
     <div class="note">Pricing assumption: The proposed price is €19 per month per surf school. This is the starting price chosen for the project.</div>
   </section>
-  <section>
+  <section id="limitations">
     <div class="kicker">05 / Prototype limitations</div>
     <h2>What this version does — and does not do</h2>
     <div class="warning">
@@ -109,13 +126,18 @@ footer .wrap{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
       <li>The displayed money-at-risk figure is an estimate based on sample bookings and an assumed lesson price, not actual revenue.</li>
     </ul>
   </section>
-  <section>
-    <div class="kicker">06 / Use of AI assistance</div>
+  <section id="hunch">
+    <div class="kicker">06 / My hunch before AI</div>
+    <h2>My hunch before AI</h2>
+    <p>I think small surf-school owners would pay for a simple booking management tool because weather cancellations create extra admin work and can cause them to lose revenue when customers do not rebook.</p>
+  </section>
+  <section id="ai">
+    <div class="kicker">07 / Use of AI assistance</div>
     <h2>How AI supported the work</h2>
     <p>AI assistance was used to help draft and refine interface copy, explore the workflow, generate and revise HTML/CSS/JavaScript, and identify prototype limitations and testing ideas. The output was reviewed and adjusted as part of the project. Research assumptions, sample data and prototype behaviour should still be checked by the project author.</p>
   </section>
-  <section>
-    <div class="kicker">07 / Alpha test</div>
+  <section id="alpha-test">
+    <div class="kicker">08 / Alpha test</div>
     <h2>Test notes</h2>
     <div class="card">
       <h3>What I tried</h3>
